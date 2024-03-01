@@ -3,19 +3,31 @@ import 'package:flutter/material.dart';
 
 class AppThemeData {
   static ThemeData themeData = ThemeData(
-    colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
     useMaterial3: true,
+    primaryColor: AppStyleColors.primary,
+    buttonTheme: ButtonThemeData(
+        buttonColor: AppStyleColors.primary, highlightColor: AppStyleColors.primary),
     appBarTheme: AppBarTheme(
       centerTitle: true,
-      elevation: 0,
       backgroundColor: AppStyleColors.primary,
-      actionsIconTheme: const IconThemeData(
-        color: Colors.white,
-      ),
-      titleTextStyle: const TextStyle(color: Colors.white),
+      actionsIconTheme: const IconThemeData(color: AppStyleColors.white),
+      titleTextStyle: const TextStyle(color: AppStyleColors.white),
       iconTheme: const IconThemeData(
-        color: Colors.white,
+        color: AppStyleColors.white,
       ),
+    ),
+    floatingActionButtonTheme: FloatingActionButtonThemeData(
+      backgroundColor: AppStyleColors.primary,
+      foregroundColor: AppStyleColors.white,
+    ),
+    textButtonTheme: TextButtonThemeData(
+      style: ButtonStyle(
+        overlayColor: const MaterialStatePropertyAll(AppStyleColors.white),
+        foregroundColor: MaterialStatePropertyAll(AppStyleColors.primary),
+      ),
+    ),
+    textTheme: const TextTheme(
+      labelLarge: TextStyle(color: Colors.black),
     ),
   );
 }

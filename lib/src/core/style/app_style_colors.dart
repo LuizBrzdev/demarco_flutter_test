@@ -6,4 +6,5 @@ class AppStyleColors {
   static const white = Colors.white;
   static const grey = Colors.grey;
   static const black = Colors.black;
+  static final Color errorPrimary = HexToColor.convertHexToColor('#DC2626');
 }

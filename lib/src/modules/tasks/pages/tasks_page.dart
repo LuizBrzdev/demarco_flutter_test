@@ -1,3 +1,9 @@
+import 'package:demarco_flutter_test/src/core/style/app_style_colors.dart';
+import 'package:demarco_flutter_test/src/shared/components/actions/c_task_checkbox_tile.dart';
+import 'package:demarco_flutter_test/src/shared/components/buttons/c_button.dart';
+import 'package:demarco_flutter_test/src/shared/components/buttons/c_floating_action_button.dart';
+import 'package:demarco_flutter_test/src/shared/components/forms/c_text_form.dart';
+import 'package:demarco_flutter_test/src/shared/components/overlays/c_dialog.dart';
 import 'package:flutter/material.dart';
 
 class TasksPage extends StatelessWidget {
@@ -12,7 +18,69 @@ class TasksPage extends StatelessWidget {
           fit: BoxFit.fitHeight,
         ),
       ),
-      body: Container(),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: Column(
+          children: [
+            const SafeArea(child: SizedBox(height: 20)),
+            ListView.separated(
+              shrinkWrap: true,
+              separatorBuilder: (context, index) => const SizedBox(height: 8),
+              itemCount: 6,
+              itemBuilder: (context, index) => CTaskCheckBoxTile(
+                completedTask: false,
+                title: 'Tarefa $index',
+              ),
+            )
+          ],
+        ),
+      ),
+      floatingActionButton: CFloatingActionButton(
+        onPressed: () {
+          openDialog(
+            title: 'Adicionar Tarefa',
+            context: context,
+            actionLabel: 'Adicionar',
+            onPressedAction: () {
+              Navigator.of(context).pop();
+            },
+            content: Column(
+              children: [
+                const SizedBox(height: 16),
+                CTextForm(
+                  label: 'Nome',
+                  hintText: 'Informe o nome da sua tarefa',
+                  onChanged: (value) {},
+                  type: CTextFormType.date,
+                ),
+                const SizedBox(height: 8),
+                CTextForm(
+                  label: 'Data',
+                  hintText: 'Informe uma data',
+                  onChanged: (value) {},
+                  type: CTextFormType.date,
+                ),
+                const SizedBox(height: 8),
+                CTextForm(
+                  height: 100,
+                  label: 'Descrição',
+                  hintText: 'Informe sua descrição aqui',
+                  maxLines: 3,
+                  onChanged: (value) {},
+                ),
+                const SizedBox(height: 8),
+                const CButton(
+                  label: 'Adicionar imagem',
+                  icon: Icon(
+                    Icons.add,
+                    color: AppStyleColors.white,
+                  ),
+                )
+              ],
+            ),
+          );
+        },
+      ),
     );
   }
 }

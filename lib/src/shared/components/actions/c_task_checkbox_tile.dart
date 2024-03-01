@@ -16,7 +16,6 @@ class CTaskCheckBoxTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 12),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(6),
         color: AppStyleColors.white,
