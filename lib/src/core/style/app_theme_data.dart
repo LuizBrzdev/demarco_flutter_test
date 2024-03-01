@@ -8,7 +8,7 @@ class AppThemeData {
     appBarTheme: AppBarTheme(
       centerTitle: true,
       elevation: 0,
-      backgroundColor: AppStyleColors.blackPrimary,
+      backgroundColor: AppStyleColors.primary,
       actionsIconTheme: const IconThemeData(
         color: Colors.white,
       ),
