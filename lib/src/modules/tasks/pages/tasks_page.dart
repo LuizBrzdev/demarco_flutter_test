@@ -7,7 +7,10 @@ class TasksPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(''),
+        title: Image.asset(
+          'assets/images/logo_without_bg.png',
+          fit: BoxFit.fitHeight,
+        ),
       ),
       body: Container(),
     );
