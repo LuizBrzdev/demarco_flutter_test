@@ -1,5 +1,4 @@
 import 'package:demarco_flutter_test/src/core/style/app_style_colors.dart';
-import 'package:demarco_flutter_test/src/modules/tasks/widgets/carrousel_indicator.dart';
 import 'package:demarco_flutter_test/src/modules/tasks/widgets/carrousel_slider.dart';
 import 'package:demarco_flutter_test/src/shared/components/actions/c_task_checkbox_tile.dart';
 import 'package:demarco_flutter_test/src/shared/components/buttons/c_button.dart';
