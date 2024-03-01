@@ -1,15 +1,16 @@
 import 'package:demarco_flutter_test/src/core/style/app_style_colors.dart';
 import 'package:flutter/material.dart';
 
-Future<void> openDialog(
-    {required BuildContext context,
-    VoidCallback? onPressedAction,
-    VoidCallback? onPressBack,
-    Widget? content,
-    String actionLabel = '',
-    String onPressBackButtonLabel = '',
-    bool barrierDismissible = true,
-    required final String title}) async {
+Future<void> openDialog({
+  required BuildContext context,
+  final VoidCallback? onPressedAction,
+  final VoidCallback? onPressBack,
+  final Widget? content,
+  final String actionLabel = '',
+  final String onPressBackButtonLabel = '',
+  final bool barrierDismissible = true,
+  required final String title,
+}) async {
   await showDialog(
     context: context,
     barrierDismissible: barrierDismissible,

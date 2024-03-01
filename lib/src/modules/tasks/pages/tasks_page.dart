@@ -1,4 +1,6 @@
 import 'package:demarco_flutter_test/src/core/style/app_style_colors.dart';
+import 'package:demarco_flutter_test/src/modules/tasks/widgets/carrousel_indicator.dart';
+import 'package:demarco_flutter_test/src/modules/tasks/widgets/carrousel_slider.dart';
 import 'package:demarco_flutter_test/src/shared/components/actions/c_task_checkbox_tile.dart';
 import 'package:demarco_flutter_test/src/shared/components/buttons/c_button.dart';
 import 'package:demarco_flutter_test/src/shared/components/buttons/c_floating_action_button.dart';
@@ -19,19 +21,23 @@ class TasksPage extends StatelessWidget {
         ),
       ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Column(
           children: [
             const SafeArea(child: SizedBox(height: 20)),
+            const CarrouselSlider(itemCount: 3),
+            const SizedBox(height: 20),
             ListView.separated(
               shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
               separatorBuilder: (context, index) => const SizedBox(height: 8),
               itemCount: 6,
+              padding: const EdgeInsets.symmetric(horizontal: 16),
               itemBuilder: (context, index) => CTaskCheckBoxTile(
                 completedTask: false,
                 title: 'Tarefa $index',
               ),
-            )
+            ),
+            const SizedBox(height: 20),
           ],
         ),
       ),

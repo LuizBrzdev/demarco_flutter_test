@@ -29,7 +29,7 @@ class CButton extends StatelessWidget {
   final Widget? icon;
 
   /// [height] é a altura do botão.
-  /// O valor default é [55].
+  /// O valor default é [48].
   final double height;
 
   /// [width] é a largura do botão.
@@ -39,11 +39,11 @@ class CButton extends StatelessWidget {
   /// [onPressed] é a função que será executada quando o botão for pressionado.
   final VoidCallback? onPressed;
 
-  /// [inProcess] é um bool que indica se o botão está em processo.
+  /// [isLoading] é um bool que indica se o botão está em processo.
   /// O valor default é [false].
-  /// Se [inProcess] for [true], o botão será desabilitado e será exibido
-  /// um [Lottie] de carregamento.
-  final bool inProcess;
+  /// Se [isLoading] for [true], o botão será desabilitado e será exibido
+
+  final bool isLoading;
 
   const CButton({
     super.key,
@@ -51,9 +51,9 @@ class CButton extends StatelessWidget {
     required this.label,
     this.hasIcon = false,
     this.icon,
-    this.height = 55,
+    this.height = 48,
     this.onPressed,
-    this.inProcess = false,
+    this.isLoading = false,
     this.width = double.infinity,
   });
 
@@ -62,15 +62,16 @@ class CButton extends StatelessWidget {
     return InkWell(
       onTap: _denyPressCondition() ? null : onPressed,
       child: Visibility(
-        visible: !inProcess,
+        visible: !isLoading,
         replacement: Container(
+          padding: const EdgeInsets.all(8),
           height: height,
           width: double.infinity,
           decoration: _boxDecoration(style),
           child: const Center(
             child: CircularProgressIndicator(
-              color: AppStyleColors.black,
-              strokeWidth: 2,
+              color: AppStyleColors.white,
+              strokeWidth: 4,
             ),
           ),
         ),
@@ -113,7 +114,7 @@ class CButton extends StatelessWidget {
     List<CButtonStyle> denyPress = [
       CButtonStyle.primaryDisabled,
     ];
-    return (denyPress.contains(style) || onPressed == null || inProcess);
+    return (denyPress.contains(style) || onPressed == null || isLoading);
   }
 
   BoxDecoration _boxDecoration(CButtonStyle style) {
