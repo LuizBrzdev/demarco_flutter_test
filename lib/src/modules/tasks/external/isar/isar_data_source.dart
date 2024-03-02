@@ -1,9 +1,12 @@
+import 'package:demarco_flutter_test/src/modules/tasks/domain/entities/task_entity.dart';
+import 'package:demarco_flutter_test/src/modules/tasks/infra/datasource/task_datasource.dart';
 import 'package:isar/isar.dart';
 import 'package:path_provider/path_provider.dart';
 
+import '../adapters/task_model_adapter.dart';
 import 'task_model.dart';
 
-class IsarDatasource {
+class IsarDatasource implements TaskDatasource {
   late Isar? _isar;
 
   Future<Isar> _getInstance() async {
@@ -20,23 +23,24 @@ class IsarDatasource {
     return _isar!;
   }
 
-  Future<List<TaskModel>> getTasks() async {
+  @override
+  Future<List<TaskModel>> getAllTasks() async {
     final isar = await _getInstance();
     return await isar.taskModels.where().findAll();
   }
 
-  Future<void> deleteAllTasks() async {
+  @override
+  Future<void> addNewTask(TaskEntity task) async {
     final isar = await _getInstance();
-
-    await isar.writeTxn(() {
-      return isar.taskModels.where().deleteAll();
-    });
+    await isar.taskModels.put(TaskModelAdapter.taskEntityToModel(task));
   }
 
-  Future<void> putAllTasks(List<TaskModel> models) async {
+  @override
+  Future<void> deleteTask(int id) async {
     final isar = await _getInstance();
+
     await isar.writeTxn(() {
-      return isar.taskModels.putAll(models);
+      return isar.taskModels.delete(id);
     });
   }
 }
