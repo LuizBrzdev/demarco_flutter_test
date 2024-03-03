@@ -16,7 +16,7 @@ class CarrouselIndicatorWidget extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: List.generate(
-        itemCount,
+        itemCount.clamp(1, 3),
         (index) => _IndicatorWidget(isActive: currentIndex == index),
       ),
     );
