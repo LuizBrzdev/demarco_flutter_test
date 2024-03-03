@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class CTaskCheckBoxTile extends StatelessWidget {
   final String title;
   final bool completedTask;
-  final void Function(bool?)? onChanged;
+  final void Function(bool? value)? onChanged;
 
   const CTaskCheckBoxTile({
     super.key,

@@ -1,11 +1,11 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 
-class CarrouselIndicator extends StatelessWidget {
+class CarrouselIndicatorWidget extends StatelessWidget {
   final int currentIndex;
   final int itemCount;
 
-  const CarrouselIndicator({
+  const CarrouselIndicatorWidget({
     required this.currentIndex,
     required this.itemCount,
     super.key,

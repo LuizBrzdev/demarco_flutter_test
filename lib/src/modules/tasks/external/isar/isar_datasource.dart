@@ -7,13 +7,15 @@ import '../adapters/task_model_adapter.dart';
 import 'task_model.dart';
 
 class IsarDatasource implements TaskDatasource {
-  late Isar? _isar;
+  Isar? _isar;
+
+  static IsarDatasource? _instance;
+
+  IsarDatasource._();
+  static IsarDatasource get instance => _instance ??= IsarDatasource._();
 
   Future<Isar> _getInstance() async {
-    if (_isar != null) {
-      return _isar!;
-    }
-
+    if (_isar != null) return _isar!;
     final dir = await getApplicationDocumentsDirectory();
     _isar = await Isar.open(
       [TaskModelSchema],
@@ -32,15 +34,21 @@ class IsarDatasource implements TaskDatasource {
   @override
   Future<void> addNewTask(TaskEntity task) async {
     final isar = await _getInstance();
-    await isar.taskModels.put(TaskModelAdapter.taskEntityToModel(task));
+
+    await isar.writeTxn(() {
+      return isar.taskModels.put(TaskModelAdapter.taskEntityToModel(task));
+    });
   }
 
   @override
-  Future<void> deleteTask(int id) async {
+  Future<void> updateCompletedStatus(TaskEntity task) async {
     final isar = await _getInstance();
-
-    await isar.writeTxn(() {
-      return isar.taskModels.delete(id);
-    });
+    final taskToUpdate = isar.taskModels.where().filter().idEqualTo(task.id).findFirstSync();
+    if (taskToUpdate != null) {
+      taskToUpdate.completed = !taskToUpdate.completed;
+      await isar.writeTxn(() {
+        return isar.taskModels.put(taskToUpdate);
+      });
+    }
   }
 }

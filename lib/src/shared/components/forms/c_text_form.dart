@@ -15,6 +15,7 @@ class CTextForm extends StatefulWidget {
   final int? maxLines;
   final String? hintText;
   final String label;
+  final TextEditingController? controller;
 
   ///[inputFormatters] formata as mascaras de texto de acordo com o [CTextFormType]
   final List<TextInputFormatter>? inputFormatters;
@@ -31,6 +32,7 @@ class CTextForm extends StatefulWidget {
     this.inputFormatters,
     this.type = CTextFormType.none,
     required this.label,
+    this.controller,
   });
 
   @override
@@ -47,6 +49,7 @@ class _CTextFormState extends State<CTextForm> {
           height: widget.height,
           width: widget.width,
           child: TextField(
+            controller: widget.controller,
             inputFormatters: _returnInputFormatterMask(widget.type),
             maxLines: widget.maxLines,
             onChanged: (value) {

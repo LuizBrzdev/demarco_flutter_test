@@ -2,13 +2,15 @@ import 'package:animate_do/animate_do.dart';
 import 'package:demarco_flutter_test/src/core/style/app_style_colors.dart';
 import 'package:flutter/material.dart';
 
-import 'carrousel_indicator.dart';
+import 'carrousel_indicator_widget.dart';
 
 class CarrouselSlider extends StatefulWidget {
   final int itemCount;
+  final Widget? Function(BuildContext context, int index) itemBuilder;
   const CarrouselSlider({
     super.key,
     required this.itemCount,
+    required this.itemBuilder,
   });
 
   @override
@@ -26,7 +28,7 @@ class _CarrouselSliderState extends State<CarrouselSlider> {
       child: Stack(
         children: [
           PageView.builder(
-            itemCount: widget.itemCount,
+            itemCount: widget.itemCount.clamp(0, 3),
             onPageChanged: (value) => setState(
               () {
                 currentIndex = value;
@@ -34,7 +36,7 @@ class _CarrouselSliderState extends State<CarrouselSlider> {
             ),
             itemBuilder: (context, index) => const Padding(
               padding: EdgeInsets.symmetric(horizontal: 16),
-              child: _CarrouselImage(
+              child: CarrouselImage(
                 imageUrl: '',
                 taskName: 'teste',
                 taskDate: '12/09/0199',
@@ -45,7 +47,7 @@ class _CarrouselSliderState extends State<CarrouselSlider> {
             alignment: Alignment.bottomCenter,
             child: Padding(
               padding: const EdgeInsets.only(bottom: 8),
-              child: CarrouselIndicator(
+              child: CarrouselIndicatorWidget(
                 currentIndex: currentIndex,
                 itemCount: 3,
               ),
@@ -57,12 +59,13 @@ class _CarrouselSliderState extends State<CarrouselSlider> {
   }
 }
 
-class _CarrouselImage extends StatelessWidget {
+class CarrouselImage extends StatelessWidget {
   final String imageUrl;
   final String taskName;
   final String taskDate;
 
-  const _CarrouselImage({
+  const CarrouselImage({
+    super.key,
     required this.imageUrl,
     required this.taskName,
     required this.taskDate,
