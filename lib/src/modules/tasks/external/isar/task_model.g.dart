@@ -89,9 +89,14 @@ TaskModel _taskModelDeserialize(
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
-  final object =
-      TaskModel(id: id, name: '', description: '', date: '', completed: false, image: '');
-
+  final object = TaskModel(
+    completed: reader.readBool(offsets[0]),
+    date: reader.readString(offsets[1]),
+    description: reader.readString(offsets[2]),
+    id: id,
+    image: reader.readString(offsets[3]),
+    name: reader.readString(offsets[4]),
+  );
   return object;
 }
 
@@ -129,7 +134,8 @@ void _taskModelAttach(IsarCollection<dynamic> col, Id id, TaskModel object) {
   object.id = id;
 }
 
-extension TaskModelQueryWhereSort on QueryBuilder<TaskModel, TaskModel, QWhere> {
+extension TaskModelQueryWhereSort
+    on QueryBuilder<TaskModel, TaskModel, QWhere> {
   QueryBuilder<TaskModel, TaskModel, QAfterWhere> anyId() {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(const IdWhereClause.any());
@@ -137,7 +143,8 @@ extension TaskModelQueryWhereSort on QueryBuilder<TaskModel, TaskModel, QWhere> 
   }
 }
 
-extension TaskModelQueryWhere on QueryBuilder<TaskModel, TaskModel, QWhereClause> {
+extension TaskModelQueryWhere
+    on QueryBuilder<TaskModel, TaskModel, QWhereClause> {
   QueryBuilder<TaskModel, TaskModel, QAfterWhereClause> idEqualTo(Id id) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(IdWhereClause.between(
@@ -178,7 +185,8 @@ extension TaskModelQueryWhere on QueryBuilder<TaskModel, TaskModel, QWhereClause
     });
   }
 
-  QueryBuilder<TaskModel, TaskModel, QAfterWhereClause> idLessThan(Id id, {bool include = false}) {
+  QueryBuilder<TaskModel, TaskModel, QAfterWhereClause> idLessThan(Id id,
+      {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
         IdWhereClause.lessThan(upper: id, includeUpper: include),
@@ -203,8 +211,10 @@ extension TaskModelQueryWhere on QueryBuilder<TaskModel, TaskModel, QWhereClause
   }
 }
 
-extension TaskModelQueryFilter on QueryBuilder<TaskModel, TaskModel, QFilterCondition> {
-  QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition> completedEqualTo(bool value) {
+extension TaskModelQueryFilter
+    on QueryBuilder<TaskModel, TaskModel, QFilterCondition> {
+  QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition> completedEqualTo(
+      bool value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'completed',
@@ -301,7 +311,8 @@ extension TaskModelQueryFilter on QueryBuilder<TaskModel, TaskModel, QFilterCond
     });
   }
 
-  QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition> dateContains(String value,
+  QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition> dateContains(
+      String value,
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
@@ -312,7 +323,8 @@ extension TaskModelQueryFilter on QueryBuilder<TaskModel, TaskModel, QFilterCond
     });
   }
 
-  QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition> dateMatches(String pattern,
+  QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition> dateMatches(
+      String pattern,
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
@@ -354,7 +366,8 @@ extension TaskModelQueryFilter on QueryBuilder<TaskModel, TaskModel, QFilterCond
     });
   }
 
-  QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition> descriptionGreaterThan(
+  QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition>
+      descriptionGreaterThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
@@ -403,7 +416,8 @@ extension TaskModelQueryFilter on QueryBuilder<TaskModel, TaskModel, QFilterCond
     });
   }
 
-  QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition> descriptionStartsWith(
+  QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition>
+      descriptionStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -429,7 +443,8 @@ extension TaskModelQueryFilter on QueryBuilder<TaskModel, TaskModel, QFilterCond
     });
   }
 
-  QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition> descriptionContains(String value,
+  QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition> descriptionContains(
+      String value,
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
@@ -440,7 +455,8 @@ extension TaskModelQueryFilter on QueryBuilder<TaskModel, TaskModel, QFilterCond
     });
   }
 
-  QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition> descriptionMatches(String pattern,
+  QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition> descriptionMatches(
+      String pattern,
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
@@ -451,7 +467,8 @@ extension TaskModelQueryFilter on QueryBuilder<TaskModel, TaskModel, QFilterCond
     });
   }
 
-  QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition> descriptionIsEmpty() {
+  QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition>
+      descriptionIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'description',
@@ -460,7 +477,8 @@ extension TaskModelQueryFilter on QueryBuilder<TaskModel, TaskModel, QFilterCond
     });
   }
 
-  QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition> descriptionIsNotEmpty() {
+  QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition>
+      descriptionIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         property: r'description',
@@ -469,7 +487,8 @@ extension TaskModelQueryFilter on QueryBuilder<TaskModel, TaskModel, QFilterCond
     });
   }
 
-  QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition> idEqualTo(Id value) {
+  QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition> idEqualTo(
+      Id value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'id',
@@ -609,7 +628,8 @@ extension TaskModelQueryFilter on QueryBuilder<TaskModel, TaskModel, QFilterCond
     });
   }
 
-  QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition> imageContains(String value,
+  QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition> imageContains(
+      String value,
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
@@ -620,7 +640,8 @@ extension TaskModelQueryFilter on QueryBuilder<TaskModel, TaskModel, QFilterCond
     });
   }
 
-  QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition> imageMatches(String pattern,
+  QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition> imageMatches(
+      String pattern,
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
@@ -737,7 +758,8 @@ extension TaskModelQueryFilter on QueryBuilder<TaskModel, TaskModel, QFilterCond
     });
   }
 
-  QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition> nameContains(String value,
+  QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition> nameContains(
+      String value,
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
@@ -748,7 +770,8 @@ extension TaskModelQueryFilter on QueryBuilder<TaskModel, TaskModel, QFilterCond
     });
   }
 
-  QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition> nameMatches(String pattern,
+  QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition> nameMatches(
+      String pattern,
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
@@ -778,9 +801,11 @@ extension TaskModelQueryFilter on QueryBuilder<TaskModel, TaskModel, QFilterCond
   }
 }
 
-extension TaskModelQueryObject on QueryBuilder<TaskModel, TaskModel, QFilterCondition> {}
+extension TaskModelQueryObject
+    on QueryBuilder<TaskModel, TaskModel, QFilterCondition> {}
 
-extension TaskModelQueryLinks on QueryBuilder<TaskModel, TaskModel, QFilterCondition> {}
+extension TaskModelQueryLinks
+    on QueryBuilder<TaskModel, TaskModel, QFilterCondition> {}
 
 extension TaskModelQuerySortBy on QueryBuilder<TaskModel, TaskModel, QSortBy> {
   QueryBuilder<TaskModel, TaskModel, QAfterSortBy> sortByCompleted() {
@@ -844,7 +869,8 @@ extension TaskModelQuerySortBy on QueryBuilder<TaskModel, TaskModel, QSortBy> {
   }
 }
 
-extension TaskModelQuerySortThenBy on QueryBuilder<TaskModel, TaskModel, QSortThenBy> {
+extension TaskModelQuerySortThenBy
+    on QueryBuilder<TaskModel, TaskModel, QSortThenBy> {
   QueryBuilder<TaskModel, TaskModel, QAfterSortBy> thenByCompleted() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'completed', Sort.asc);
@@ -918,39 +944,45 @@ extension TaskModelQuerySortThenBy on QueryBuilder<TaskModel, TaskModel, QSortTh
   }
 }
 
-extension TaskModelQueryWhereDistinct on QueryBuilder<TaskModel, TaskModel, QDistinct> {
+extension TaskModelQueryWhereDistinct
+    on QueryBuilder<TaskModel, TaskModel, QDistinct> {
   QueryBuilder<TaskModel, TaskModel, QDistinct> distinctByCompleted() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'completed');
     });
   }
 
-  QueryBuilder<TaskModel, TaskModel, QDistinct> distinctByDate({bool caseSensitive = true}) {
+  QueryBuilder<TaskModel, TaskModel, QDistinct> distinctByDate(
+      {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'date', caseSensitive: caseSensitive);
     });
   }
 
-  QueryBuilder<TaskModel, TaskModel, QDistinct> distinctByDescription({bool caseSensitive = true}) {
+  QueryBuilder<TaskModel, TaskModel, QDistinct> distinctByDescription(
+      {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'description', caseSensitive: caseSensitive);
     });
   }
 
-  QueryBuilder<TaskModel, TaskModel, QDistinct> distinctByImage({bool caseSensitive = true}) {
+  QueryBuilder<TaskModel, TaskModel, QDistinct> distinctByImage(
+      {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'image', caseSensitive: caseSensitive);
     });
   }
 
-  QueryBuilder<TaskModel, TaskModel, QDistinct> distinctByName({bool caseSensitive = true}) {
+  QueryBuilder<TaskModel, TaskModel, QDistinct> distinctByName(
+      {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'name', caseSensitive: caseSensitive);
     });
   }
 }
 
-extension TaskModelQueryProperty on QueryBuilder<TaskModel, TaskModel, QQueryProperty> {
+extension TaskModelQueryProperty
+    on QueryBuilder<TaskModel, TaskModel, QQueryProperty> {
   QueryBuilder<TaskModel, int, QQueryOperations> idProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'id');

@@ -1,11 +1,12 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:demarco_flutter_test/src/core/style/app_style_colors.dart';
 import 'package:flutter/material.dart';
 
-class CarrouselIndicator extends StatelessWidget {
+class CarrouselIndicatorWidget extends StatelessWidget {
   final int currentIndex;
   final int itemCount;
 
-  const CarrouselIndicator({
+  const CarrouselIndicatorWidget({
     required this.currentIndex,
     required this.itemCount,
     super.key,
@@ -16,7 +17,7 @@ class CarrouselIndicator extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: List.generate(
-        itemCount,
+        itemCount.clamp(1, 3),
         (index) => _IndicatorWidget(isActive: currentIndex == index),
       ),
     );
@@ -36,6 +37,7 @@ class _IndicatorWidget extends StatelessWidget {
       margin: const EdgeInsets.only(right: 5),
       decoration: BoxDecoration(
         color: Colors.white,
+        border: Border.all(width: 1, color: AppStyleColors.primary),
         borderRadius: BorderRadius.circular(5),
       ),
     );

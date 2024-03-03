@@ -15,6 +15,7 @@ class CTextForm extends StatefulWidget {
   final int? maxLines;
   final String? hintText;
   final String label;
+  final TextEditingController? controller;
 
   ///[inputFormatters] formata as mascaras de texto de acordo com o [CTextFormType]
   final List<TextInputFormatter>? inputFormatters;
@@ -31,6 +32,7 @@ class CTextForm extends StatefulWidget {
     this.inputFormatters,
     this.type = CTextFormType.none,
     required this.label,
+    this.controller,
   });
 
   @override
@@ -42,11 +44,13 @@ class _CTextFormState extends State<CTextForm> {
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SizedBox(
           height: widget.height,
           width: widget.width,
           child: TextField(
+            controller: widget.controller,
             inputFormatters: _returnInputFormatterMask(widget.type),
             maxLines: widget.maxLines,
             onChanged: (value) {
@@ -85,7 +89,7 @@ class _CTextFormState extends State<CTextForm> {
         Visibility(
           visible: (validationString != null || widget.errorText != ''),
           child: Padding(
-            padding: const EdgeInsets.only(top: 4, left: 12),
+            padding: const EdgeInsets.only(top: 4),
             child: Text(
               validationString ?? widget.errorText,
               style: TextStyle(
