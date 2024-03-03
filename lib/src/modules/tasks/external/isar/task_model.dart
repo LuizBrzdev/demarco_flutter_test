@@ -7,6 +7,7 @@ part 'task_model.g.dart';
 
 @collection
 class TaskModel implements TaskEntity {
+  @override
   Id id = Isar.autoIncrement;
 
   @override

@@ -22,8 +22,8 @@ class TasksCubit extends Cubit<TasksState> {
 
   Future<void> fetchAllTasks() async {
     final tasks = await _tasksRepository.getTasks();
-    final filterTasks = tasks.where((element) => element.completed == false).toList();
-    emitTasks(filterTasks);
+    final filteredTasks = tasks.where((task) => !task.completed).toList();
+    emitTasks(filteredTasks);
   }
 
   Future<void> addNewTask() async {
