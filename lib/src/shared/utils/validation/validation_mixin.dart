@@ -25,7 +25,7 @@ mixin ValidationMixin {
     VoidCallback? onInvalid,
     VoidCallback? onValid,
   }) {
-    if (value!.length <= min) {
+    if (value!.trim().length <= min) {
       onInvalid?.call();
       return message ?? 'Campo deve ter no mínimo $min caracteres';
     }

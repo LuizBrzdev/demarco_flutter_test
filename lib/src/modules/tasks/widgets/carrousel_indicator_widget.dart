@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:demarco_flutter_test/src/core/style/app_style_colors.dart';
 import 'package:flutter/material.dart';
 
 class CarrouselIndicatorWidget extends StatelessWidget {
@@ -36,6 +37,7 @@ class _IndicatorWidget extends StatelessWidget {
       margin: const EdgeInsets.only(right: 5),
       decoration: BoxDecoration(
         color: Colors.white,
+        border: Border.all(width: 1, color: AppStyleColors.primary),
         borderRadius: BorderRadius.circular(5),
       ),
     );
