@@ -44,6 +44,7 @@ class _CTextFormState extends State<CTextForm> {
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SizedBox(
           height: widget.height,
@@ -88,7 +89,7 @@ class _CTextFormState extends State<CTextForm> {
         Visibility(
           visible: (validationString != null || widget.errorText != ''),
           child: Padding(
-            padding: const EdgeInsets.only(top: 4, left: 12),
+            padding: const EdgeInsets.only(top: 4),
             child: Text(
               validationString ?? widget.errorText,
               style: TextStyle(

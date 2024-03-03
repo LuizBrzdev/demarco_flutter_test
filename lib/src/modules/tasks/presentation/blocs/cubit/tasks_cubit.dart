@@ -1,3 +1,4 @@
+import 'package:demarco_flutter_test/src/shared/utils/validation/validation_helper.dart';
 import 'package:flutter/material.dart';
 
 import '../../../domain/entities/task_entity.dart';
@@ -7,9 +8,10 @@ import 'package:bloc/bloc.dart';
 
 class TasksCubit extends Cubit<TasksState> {
   //CONSTRUCTOS
-  late final TasksRepository _tasksRepository;
+  final TasksRepository _tasksRepository;
+  final ValidationHelper validationHelper;
 
-  TasksCubit({required TasksRepository tasksRepository})
+  TasksCubit({required TasksRepository tasksRepository, required this.validationHelper})
       : _tasksRepository = tasksRepository,
         super(TasksLoadingState());
 

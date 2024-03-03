@@ -7,6 +7,7 @@ import 'package:demarco_flutter_test/src/shared/components/buttons/c_button.dart
 import 'package:demarco_flutter_test/src/shared/components/buttons/c_floating_action_button.dart';
 import 'package:demarco_flutter_test/src/shared/components/forms/c_text_form.dart';
 import 'package:demarco_flutter_test/src/shared/components/overlays/c_dialog.dart';
+import 'package:demarco_flutter_test/src/shared/utils/validation/validation_mixin.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
@@ -19,7 +20,7 @@ class TasksPage extends StatefulWidget {
   State<TasksPage> createState() => _TasksPageState();
 }
 
-class _TasksPageState extends State<TasksPage> {
+class _TasksPageState extends State<TasksPage> with ValidationMixin {
   final _cubit = GetIt.instance<TasksCubit>();
   @override
   void initState() {
@@ -123,6 +124,12 @@ class _TasksPageState extends State<TasksPage> {
                 label: 'Nome',
                 hintText: 'Informe o nome da sua tarefa',
                 controller: _cubit.taskNameController,
+                onValidation: (value) => combine(
+                  [
+                    () => isNotEmpty(value),
+                    () => isGreaterThan(value, 3),
+                  ],
+                ),
               ),
               const SizedBox(height: 8),
               CTextForm(
@@ -130,6 +137,7 @@ class _TasksPageState extends State<TasksPage> {
                 hintText: 'Informe uma data',
                 controller: _cubit.taskDateController,
                 type: CTextFormType.date,
+                onValidation: (value) => isValidDate(value),
               ),
               const SizedBox(height: 8),
               CTextForm(

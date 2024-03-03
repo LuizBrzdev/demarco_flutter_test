@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 mixin ValidationMixin {
   ///[isNotEmpty] verifica se o valor  não está vazio
@@ -59,13 +60,35 @@ mixin ValidationMixin {
       return message ?? 'Data inválida';
     }
 
-    String currentYear = DateTime.now().year.toString();
+    final DateTime inputDate = DateFormat('dd/MM/yyyy').parse(value);
 
-    if (year > int.parse(currentYear)) {
+    if (inputDate.isBefore(DateTime.now())) {
       onInvalid?.call();
-      return message ?? 'Ano inválido';
+      return message ?? 'Data inválida';
     }
+    onValid?.call();
+    return null;
+  }
 
+  ///[combine] combina vários mais de 1 validador.
+  ///<br>
+  ///Exemplo:
+  ///<br>
+  /// onValidation: (value) => combine([
+  ///    () => isNotEmpty(value),
+  ///    () => isEmail(value),]),
+  String? combine(
+    List<String? Function()> validators, {
+    VoidCallback? onInvalid,
+    VoidCallback? onValid,
+  }) {
+    for (var validator in validators) {
+      String? result = validator();
+      if (result != null) {
+        onInvalid?.call();
+        return result;
+      }
+    }
     onValid?.call();
     return null;
   }
