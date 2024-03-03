@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:animate_do/animate_do.dart';
 import 'package:demarco_flutter_test/src/core/style/app_style_colors.dart';
 import 'package:flutter/material.dart';
@@ -73,8 +75,8 @@ class CarrouselImage extends StatelessWidget {
           SizedBox(
             width: double.infinity,
             height: 200,
-            child: Image.network(
-              imageUrl,
+            child: Image.file(
+              File(imageUrl),
               fit: BoxFit.cover,
               height: MediaQuery.of(context).size.height,
               width: MediaQuery.of(context).size.width,

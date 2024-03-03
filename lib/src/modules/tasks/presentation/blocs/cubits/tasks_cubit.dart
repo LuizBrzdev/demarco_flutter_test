@@ -1,4 +1,5 @@
 import 'package:demarco_flutter_test/src/shared/utils/validation/validation_helper.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 
 import '../../../domain/entities/task_entity.dart';
@@ -20,33 +21,18 @@ class TasksCubit extends Cubit<TasksState> {
   final taskDescriptionController = TextEditingController();
   final taskDateController = TextEditingController();
 
-  //FUNCTIONS
+  //VALIDATION
+  final tasksValidForms = const ['taskName', 'taskDescription', 'taskDate'];
+
+  //VARIABLES
+  late String _selectedImagePath;
+
+  //METHODS
 
   Future<void> fetchAllTasks() async {
     final tasks = await _tasksRepository.getTasks();
     final filteredTasks = tasks.where((task) => !task.completed).toList();
-    emitTasks(filteredTasks);
-  }
-
-  Future<void> addNewTask() async {
-    await _tasksRepository.addNewTask(
-      TaskEntity(
-        id: 1,
-        name: taskNameController.text,
-        description: taskDescriptionController.text,
-        date: taskDateController.text,
-        completed: false,
-        image: '',
-      ),
-    );
-    fetchAllTasks();
-    clearTextControllers();
-  }
-
-  void clearTextControllers() {
-    taskNameController.clear();
-    taskDescriptionController.clear();
-    taskDateController.clear();
+    _emitTasks(filteredTasks);
   }
 
   Future<void> updateCompletedStatus(TaskEntity task) async {
@@ -65,12 +51,43 @@ class TasksCubit extends Cubit<TasksState> {
     return state.tasks.toList();
   }
 
-  emitTasks(List<TaskEntity> tasks) {
+  void _emitTasks(List<TaskEntity> tasks) {
     emit(TasksLoadingState());
     if (tasks.isEmpty) {
       emit(TasksEmptyState());
     } else {
       emit(TasksLoadedState(tasks: tasks));
     }
+  }
+
+  Future<void> addNewTask() async {
+    await _tasksRepository.addNewTask(
+      TaskEntity(
+        id: 1,
+        name: taskNameController.text,
+        description: taskDescriptionController.text,
+        date: taskDateController.text,
+        completed: false,
+        image: _selectedImagePath,
+      ),
+    );
+    clearNewTaskInformation();
+    await fetchAllTasks();
+  }
+
+  Future<String> selectImageToAddTask() async {
+    FilePickerResult? selectedImage = await FilePicker.platform.pickFiles();
+    return _selectedImagePath = selectedImage?.paths.single ?? '';
+  }
+
+  void clearNewTaskInformation() {
+    taskNameController.clear();
+    taskDescriptionController.clear();
+    taskDateController.clear();
+    _selectedImagePath = '';
+  }
+
+  bool allTasksFormsAreValid() {
+    return validationHelper.checkAllFormsAreValid(tasksValidForms);
   }
 }

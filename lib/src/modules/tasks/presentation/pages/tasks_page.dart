@@ -1,7 +1,8 @@
 import 'package:demarco_flutter_test/src/core/style/app_style_colors.dart';
-import 'package:demarco_flutter_test/src/modules/tasks/presentation/blocs/cubit/tasks_cubit.dart';
+import 'package:demarco_flutter_test/src/modules/tasks/presentation/blocs/cubits/tasks_cubit.dart';
 import 'package:demarco_flutter_test/src/modules/tasks/presentation/blocs/states/tasks_state.dart';
 import 'package:demarco_flutter_test/src/modules/tasks/widgets/carrousel_slider_widget.dart';
+import 'package:demarco_flutter_test/src/modules/tasks/widgets/tasks_empty_state_widget.dart';
 import 'package:demarco_flutter_test/src/shared/components/actions/c_task_checkbox_tile.dart';
 import 'package:demarco_flutter_test/src/shared/components/buttons/c_button.dart';
 import 'package:demarco_flutter_test/src/shared/components/buttons/c_floating_action_button.dart';
@@ -11,6 +12,7 @@ import 'package:demarco_flutter_test/src/shared/utils/validation/validation_mixi
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
+import '../../../../shared/components/overlays/c_snack_bar.dart';
 import '../../widgets/tasks_skeleton_widget.dart';
 
 class TasksPage extends StatefulWidget {
@@ -48,26 +50,8 @@ class _TasksPageState extends State<TasksPage> with ValidationMixin {
                   case TasksLoadingState():
                     return const TasksSkeletonWidget();
                   case TasksEmptyState():
-                    return SizedBox(
-                      height: MediaQuery.of(context).size.height / 2,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          Container(
-                            padding: const EdgeInsets.all(12),
-                            child: const Text(
-                              'Ops...Parece que você ainda não possui nenhuma tarefa',
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                              ),
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                        ],
-                      ),
-                    );
+                    return const TasksEmptyStateWidget();
+
                   case TasksLoadedState():
                     return Column(
                       children: [
@@ -113,9 +97,19 @@ class _TasksPageState extends State<TasksPage> with ValidationMixin {
           title: 'Adicionar Tarefa',
           context: context,
           actionLabel: 'Adicionar',
-          onPressedAction: () {
-            _cubit.addNewTask();
-            Navigator.of(context).pop();
+          onPressedAction: () async {
+            if (_cubit.allTasksFormsAreValid()) {
+              await _cubit.addNewTask();
+            } else {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBarWidget(
+                  message: 'Por favor verifique os dados e tente novamente',
+                  context: context,
+                ),
+              );
+            }
+            if (context.mounted) Navigator.of(context).pop();
+            _cubit.validationHelper.checkForms.clear();
           },
           content: Column(
             children: [
@@ -129,6 +123,14 @@ class _TasksPageState extends State<TasksPage> with ValidationMixin {
                     () => isNotEmpty(value),
                     () => isGreaterThan(value, 3),
                   ],
+                  onValid: () {
+                    _cubit.validationHelper.addToCheckForm('taskName');
+                    _cubit.allTasksFormsAreValid();
+                  },
+                  onInvalid: () {
+                    _cubit.validationHelper.removeToCheckForm('taskName');
+                    _cubit.allTasksFormsAreValid();
+                  },
                 ),
               ),
               const SizedBox(height: 8),
@@ -137,7 +139,17 @@ class _TasksPageState extends State<TasksPage> with ValidationMixin {
                 hintText: 'Informe uma data',
                 controller: _cubit.taskDateController,
                 type: CTextFormType.date,
-                onValidation: (value) => isValidDate(value),
+                onValidation: (value) => isValidDate(
+                  value,
+                  onValid: () {
+                    _cubit.validationHelper.addToCheckForm('taskDate');
+                    _cubit.allTasksFormsAreValid();
+                  },
+                  onInvalid: () {
+                    _cubit.validationHelper.removeToCheckForm('taskDate');
+                    _cubit.allTasksFormsAreValid();
+                  },
+                ),
               ),
               const SizedBox(height: 8),
               CTextForm(
@@ -146,12 +158,26 @@ class _TasksPageState extends State<TasksPage> with ValidationMixin {
                 hintText: 'Informe sua descrição aqui',
                 maxLines: 3,
                 controller: _cubit.taskDescriptionController,
-                onChanged: (value) {},
+                onValidation: (value) => combine(
+                  [
+                    () => isNotEmpty(value),
+                    () => isGreaterThan(value, 8),
+                  ],
+                  onValid: () {
+                    _cubit.validationHelper.addToCheckForm('taskDescription');
+                    _cubit.allTasksFormsAreValid();
+                  },
+                  onInvalid: () {
+                    _cubit.validationHelper.removeToCheckForm('taskDescription');
+                    _cubit.allTasksFormsAreValid();
+                  },
+                ),
               ),
               const SizedBox(height: 8),
-              const CButton(
+              CButton(
                 label: 'Adicionar imagem',
-                icon: Icon(
+                onPressed: () => _cubit.selectImageToAddTask(),
+                icon: const Icon(
                   Icons.add,
                   color: AppStyleColors.white,
                 ),

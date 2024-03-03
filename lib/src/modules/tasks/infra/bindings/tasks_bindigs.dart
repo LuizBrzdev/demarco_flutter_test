@@ -1,7 +1,7 @@
 import 'package:get_it/get_it.dart';
 import '../../domain/repositories/tasks_repository.dart';
 import '../../external/isar/isar_datasource.dart';
-import '../../presentation/blocs/cubit/tasks_cubit.dart';
+import '../../presentation/blocs/cubits/tasks_cubit.dart';
 import '../datasource/task_datasource.dart';
 import '../repositories/tasks_repository.dart';
 
