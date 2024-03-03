@@ -1,8 +1,7 @@
-import 'package:demarco_flutter_test/src/modules/tasks/domain/entities/task_entity.dart';
-import 'package:demarco_flutter_test/src/modules/tasks/domain/repositories/tasks_repository.dart';
 import 'package:flutter/material.dart';
-import 'package:isar/isar.dart';
 
+import '../../../domain/entities/task_entity.dart';
+import '../../../domain/repositories/tasks_repository.dart';
 import '../states/tasks_state.dart';
 import 'package:bloc/bloc.dart';
 
@@ -23,7 +22,8 @@ class TasksCubit extends Cubit<TasksState> {
 
   Future<void> fetchAllTasks() async {
     final tasks = await _tasksRepository.getTasks();
-    emitTasks(tasks);
+    final filterTasks = tasks.where((element) => element.completed == false).toList();
+    emitTasks(filterTasks);
   }
 
   Future<void> addNewTask() async {
@@ -38,6 +38,13 @@ class TasksCubit extends Cubit<TasksState> {
       ),
     );
     fetchAllTasks();
+    clearTextControllers();
+  }
+
+  void clearTextControllers() {
+    taskNameController.clear();
+    taskDescriptionController.clear();
+    taskDateController.clear();
   }
 
   Future<void> updateCompletedStatus(TaskEntity task) async {

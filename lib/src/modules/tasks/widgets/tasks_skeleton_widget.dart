@@ -31,6 +31,8 @@ class TasksSkeletonWidget extends StatelessWidget {
                     CTaskCheckBoxTile(
                       completedTask: false,
                       title: 'FAKE TITLE',
+                      description: 'FAKE DESCRIPTION',
+                      date: 'FAKE DATE',
                     ),
                     SizedBox(height: 8),
                   ],

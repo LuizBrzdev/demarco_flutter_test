@@ -34,14 +34,7 @@ class _CarrouselSliderState extends State<CarrouselSlider> {
                 currentIndex = value;
               },
             ),
-            itemBuilder: (context, index) => const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16),
-              child: CarrouselImage(
-                imageUrl: '',
-                taskName: 'teste',
-                taskDate: '12/09/0199',
-              ),
-            ),
+            itemBuilder: widget.itemBuilder,
           ),
           Align(
             alignment: Alignment.bottomCenter,
@@ -49,7 +42,7 @@ class _CarrouselSliderState extends State<CarrouselSlider> {
               padding: const EdgeInsets.only(bottom: 8),
               child: CarrouselIndicatorWidget(
                 currentIndex: currentIndex,
-                itemCount: 3,
+                itemCount: widget.itemCount,
               ),
             ),
           )

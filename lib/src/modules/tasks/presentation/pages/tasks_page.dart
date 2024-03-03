@@ -72,10 +72,13 @@ class _TasksPageState extends State<TasksPage> {
                       children: [
                         CarrouselSlider(
                           itemCount: state.tasks.length,
-                          itemBuilder: (context, index) => CarrouselImage(
-                            imageUrl: state.tasks[index].image,
-                            taskName: state.tasks[index].name,
-                            taskDate: state.tasks[index].date,
+                          itemBuilder: (context, index) => Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 12),
+                            child: CarrouselImage(
+                              imageUrl: state.tasks[index].image,
+                              taskName: state.tasks[index].name,
+                              taskDate: state.tasks[index].date,
+                            ),
                           ),
                         ),
                         const SizedBox(height: 20),
@@ -86,8 +89,10 @@ class _TasksPageState extends State<TasksPage> {
                           itemCount: state.tasks.length,
                           padding: const EdgeInsets.symmetric(horizontal: 16),
                           itemBuilder: (context, index) => CTaskCheckBoxTile(
-                            completedTask: state.tasks[index].completed,
                             title: state.tasks[index].name,
+                            description: state.tasks[index].description,
+                            date: state.tasks[index].date,
+                            completedTask: state.tasks[index].completed,
                             onChanged: (value) {
                               _cubit.updateCompletedStatus(state.tasks[index]);
                             },
