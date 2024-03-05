@@ -32,12 +32,13 @@ src
 │   ├── bindings
 │   │   └── my_bindings.dart
 │   └── blocs
-│       └──states
-│       │   └──my_states.dart
-│       └──cubits
-│           └──my_cubit.dart
+│       ├── states
+│       │   └── my_states.dart
+│       └── cubits
+│           └── my_cubit.dart
 │ 
 └── main.dart
+
 
 ### Domain
 - Define as entidades principais e os contratos dos repositórios.
