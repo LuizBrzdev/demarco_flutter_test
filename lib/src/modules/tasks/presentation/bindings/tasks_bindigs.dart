@@ -1,9 +1,9 @@
 import 'package:get_it/get_it.dart';
 import '../../domain/repositories/tasks_repository.dart';
 import '../../external/isar/isar_datasource.dart';
-import '../../presentation/blocs/cubits/tasks_cubit.dart';
-import '../datasource/task_datasource.dart';
-import '../repositories/tasks_repository.dart';
+import '../blocs/cubits/tasks_cubit.dart';
+import '../../infra/datasource/task_datasource.dart';
+import '../../infra/repositories/tasks_repository.dart';
 
 class TasksBindings {
   ///[setupTaskBindings] inicializa as dependências do modulo de tasks

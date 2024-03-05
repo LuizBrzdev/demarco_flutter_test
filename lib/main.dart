@@ -1,6 +1,6 @@
 import 'package:demarco_flutter_test/src/core/bindings/app_bindings.dart';
 import 'package:demarco_flutter_test/src/core/style/app_theme_data.dart';
-import 'package:demarco_flutter_test/src/modules/tasks/infra/bindings/tasks_bindigs.dart';
+import 'package:demarco_flutter_test/src/modules/tasks/presentation/bindings/tasks_bindigs.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:intl/date_symbol_data_local.dart';
