@@ -3,7 +3,10 @@ import 'package:flutter/material.dart';
 import '../../../core/style/app_style_colors.dart';
 
 class SnackBarWidget extends SnackBar {
+  ///[message] mensagem a ser exibida na snack bar
   final String message;
+
+  ///[context] contexto a ser cedido
   final BuildContext context;
 
   SnackBarWidget({super.key, required this.message, required this.context})

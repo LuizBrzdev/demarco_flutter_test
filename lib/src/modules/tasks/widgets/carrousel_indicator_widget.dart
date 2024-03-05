@@ -3,7 +3,10 @@ import 'package:demarco_flutter_test/src/core/style/app_style_colors.dart';
 import 'package:flutter/material.dart';
 
 class CarrouselIndicatorWidget extends StatelessWidget {
+  ///[currentIndex] índice atual
   final int currentIndex;
+
+  ///[itemCount] contagem de itens no carrousel, por padrão é limitado a 3
   final int itemCount;
 
   const CarrouselIndicatorWidget({

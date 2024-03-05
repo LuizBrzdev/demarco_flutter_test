@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+///[ValidationMixin] Mixin para validação de formulários
+///quando a condição não for cumprida retorna uma string com o error, caso cumprida retorna null
+///métodos [onInvalid] e [onValid]  são chamados de forma respectivas
+
 mixin ValidationMixin {
   ///[isNotEmpty] verifica se o valor  não está vazio
   String? isNotEmpty(

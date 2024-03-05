@@ -4,6 +4,7 @@ import 'package:skeletonizer/skeletonizer.dart';
 import '../../../shared/components/actions/c_task_checkbox_tile.dart';
 import 'carrousel_slider_widget.dart';
 
+///[TasksSkeletonWidget] widget apresentado no estado de carregamento da pagina
 class TasksSkeletonWidget extends StatelessWidget {
   const TasksSkeletonWidget({super.key});
 

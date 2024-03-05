@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+///[TasksEmptyStateWidget] widget exibido quando não há nenhum tarefa cadastrada
 class TasksEmptyStateWidget extends StatelessWidget {
   const TasksEmptyStateWidget({super.key});
 

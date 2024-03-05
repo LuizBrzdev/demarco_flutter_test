@@ -8,8 +8,12 @@ import 'package:flutter/material.dart';
 import 'carrousel_indicator_widget.dart';
 
 class CarrouselSlider extends StatefulWidget {
+  ///[itemCount] contagem de carrosséis, por padrão é limitada a 3
   final int itemCount;
+
+  ///[itemBuilder] Cria uma lista  que funciona página por página usando widgets criados sob demanda.
   final Widget? Function(BuildContext context, int index) itemBuilder;
+
   const CarrouselSlider({
     super.key,
     required this.itemCount,
@@ -56,8 +60,13 @@ class _CarrouselSliderState extends State<CarrouselSlider> {
 }
 
 class CarrouselImage extends StatelessWidget {
+  ///[imageUrl] endereço da imagem
   final String imageUrl;
+
+  ///[taskName] nome da tarefa
   final String taskName;
+
+  ///[taskDate] data da tarefa
   final String taskDate;
 
   const CarrouselImage({
