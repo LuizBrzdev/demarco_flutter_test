@@ -21,26 +21,23 @@ class TasksCubit extends Cubit<TasksState> {
   final taskDescriptionController = TextEditingController();
   final taskDateController = TextEditingController();
 
-  //VALIDATION
-  final tasksValidForms = const ['taskName', 'taskDescription', 'taskDate'];
-
   //VARIABLES
-  late String _selectedImagePath;
+  String _selectedImagePath = '';
 
   //METHODS
 
   Future<void> fetchAllTasks() async {
     final tasks = await _tasksRepository.getTasks();
-    final filteredTasks = tasks.where((task) => !task.completed).toList();
-    _emitTasks(filteredTasks);
+    _emitTasks(tasks);
   }
 
   Future<void> updateCompletedStatus(TaskEntity task) async {
     final List<TaskEntity>? tasks = _getStateTasks();
-    final int index = tasks!.indexOf(task);
+    if (tasks == null) return;
+    final int index = tasks.indexOf(task);
     tasks[index] = task;
     await _tasksRepository.updateCompletedStatus(task.copyWith(completed: !task.completed));
-    fetchAllTasks();
+    await fetchAllTasks();
   }
 
   List<TaskEntity>? _getStateTasks() {
@@ -61,18 +58,18 @@ class TasksCubit extends Cubit<TasksState> {
   }
 
   Future<void> addNewTask() async {
-    await _tasksRepository.addNewTask(
-      TaskEntity(
-        id: 1,
-        name: taskNameController.text,
-        description: taskDescriptionController.text,
-        date: taskDateController.text,
-        completed: false,
-        image: _selectedImagePath,
-      ),
+    final newTask = TaskEntity(
+      id: 1,
+      name: taskNameController.text,
+      description: taskDescriptionController.text,
+      date: taskDateController.text,
+      completed: false,
+      image: _selectedImagePath,
     );
+
+    await _tasksRepository.addNewTask(newTask);
     clearNewTaskInformation();
-    await fetchAllTasks();
+    fetchAllTasks();
   }
 
   Future<String> selectImageToAddTask() async {
@@ -88,6 +85,12 @@ class TasksCubit extends Cubit<TasksState> {
   }
 
   bool allTasksFormsAreValid() {
+    const tasksValidForms = ['taskName', 'taskDescription', 'taskDate'];
     return validationHelper.checkAllFormsAreValid(tasksValidForms);
+  }
+
+  @visibleForTesting
+  void addTasks(List<TaskEntity> tasks) {
+    emit(TasksLoadedState(tasks: tasks));
   }
 }

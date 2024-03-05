@@ -1,3 +1,7 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:demarco_flutter_test/src/core/style/app_style_colors.dart';
 import 'package:demarco_flutter_test/src/modules/tasks/presentation/blocs/cubits/tasks_cubit.dart';
 import 'package:demarco_flutter_test/src/modules/tasks/presentation/blocs/states/tasks_state.dart';
@@ -9,25 +13,27 @@ import 'package:demarco_flutter_test/src/shared/components/buttons/c_floating_ac
 import 'package:demarco_flutter_test/src/shared/components/forms/c_text_form.dart';
 import 'package:demarco_flutter_test/src/shared/components/overlays/c_dialog.dart';
 import 'package:demarco_flutter_test/src/shared/utils/validation/validation_mixin.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get_it/get_it.dart';
+
 import '../../../../shared/components/overlays/c_snack_bar.dart';
 import '../../widgets/tasks_skeleton_widget.dart';
 
 class TasksPage extends StatefulWidget {
-  const TasksPage({super.key});
+  final TasksCubit _cubit;
+
+  const TasksPage({
+    super.key,
+    required TasksCubit cubit,
+  }) : _cubit = cubit;
 
   @override
   State<TasksPage> createState() => _TasksPageState();
 }
 
 class _TasksPageState extends State<TasksPage> with ValidationMixin {
-  final _cubit = GetIt.instance<TasksCubit>();
   @override
   void initState() {
     super.initState();
-    _cubit.fetchAllTasks();
+    widget._cubit.fetchAllTasks();
   }
 
   @override
@@ -44,16 +50,21 @@ class _TasksPageState extends State<TasksPage> with ValidationMixin {
           children: [
             const SafeArea(child: SizedBox(height: 20)),
             BlocBuilder<TasksCubit, TasksState>(
-              bloc: _cubit,
+              bloc: widget._cubit,
               builder: (context, state) {
                 switch (state) {
                   case TasksLoadingState():
-                    return const TasksSkeletonWidget();
+                    return const TasksSkeletonWidget(
+                      key: Key('LoadingState'),
+                    );
                   case TasksEmptyState():
-                    return const TasksEmptyStateWidget();
+                    return const TasksEmptyStateWidget(
+                      key: Key('EmptyState'),
+                    );
 
                   case TasksLoadedState():
                     return Column(
+                      key: const Key('LoadedState'),
                       children: [
                         CarrouselSlider(
                           itemCount: state.tasks.length,
@@ -79,7 +90,7 @@ class _TasksPageState extends State<TasksPage> with ValidationMixin {
                             date: state.tasks[index].date,
                             completedTask: state.tasks[index].completed,
                             onChanged: (value) {
-                              _cubit.updateCompletedStatus(state.tasks[index]);
+                              widget._cubit.updateCompletedStatus(state.tasks[index]);
                             },
                           ),
                         ),
@@ -98,8 +109,8 @@ class _TasksPageState extends State<TasksPage> with ValidationMixin {
           context: context,
           actionLabel: 'Adicionar',
           onPressedAction: () async {
-            if (_cubit.allTasksFormsAreValid()) {
-              await _cubit.addNewTask();
+            if (widget._cubit.allTasksFormsAreValid()) {
+              await widget._cubit.addNewTask();
             } else {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBarWidget(
@@ -109,7 +120,7 @@ class _TasksPageState extends State<TasksPage> with ValidationMixin {
               );
             }
             if (context.mounted) Navigator.of(context).pop();
-            _cubit.validationHelper.checkForms.clear();
+            widget._cubit.validationHelper.checkForms.clear();
           },
           content: Column(
             children: [
@@ -117,19 +128,19 @@ class _TasksPageState extends State<TasksPage> with ValidationMixin {
               CTextForm(
                 label: 'Nome',
                 hintText: 'Informe o nome da sua tarefa',
-                controller: _cubit.taskNameController,
+                controller: widget._cubit.taskNameController,
                 onValidation: (value) => combine(
                   [
                     () => isNotEmpty(value),
                     () => isGreaterThan(value, 3),
                   ],
                   onValid: () {
-                    _cubit.validationHelper.addToCheckForm('taskName');
-                    _cubit.allTasksFormsAreValid();
+                    widget._cubit.validationHelper.addToCheckForm('taskName');
+                    widget._cubit.allTasksFormsAreValid();
                   },
                   onInvalid: () {
-                    _cubit.validationHelper.removeToCheckForm('taskName');
-                    _cubit.allTasksFormsAreValid();
+                    widget._cubit.validationHelper.removeToCheckForm('taskName');
+                    widget._cubit.allTasksFormsAreValid();
                   },
                 ),
               ),
@@ -137,17 +148,17 @@ class _TasksPageState extends State<TasksPage> with ValidationMixin {
               CTextForm(
                 label: 'Data',
                 hintText: 'Informe uma data',
-                controller: _cubit.taskDateController,
+                controller: widget._cubit.taskDateController,
                 type: CTextFormType.date,
                 onValidation: (value) => isValidDate(
                   value,
                   onValid: () {
-                    _cubit.validationHelper.addToCheckForm('taskDate');
-                    _cubit.allTasksFormsAreValid();
+                    widget._cubit.validationHelper.addToCheckForm('taskDate');
+                    widget._cubit.allTasksFormsAreValid();
                   },
                   onInvalid: () {
-                    _cubit.validationHelper.removeToCheckForm('taskDate');
-                    _cubit.allTasksFormsAreValid();
+                    widget._cubit.validationHelper.removeToCheckForm('taskDate');
+                    widget._cubit.allTasksFormsAreValid();
                   },
                 ),
               ),
@@ -157,26 +168,26 @@ class _TasksPageState extends State<TasksPage> with ValidationMixin {
                 label: 'Descrição',
                 hintText: 'Informe sua descrição aqui',
                 maxLines: 3,
-                controller: _cubit.taskDescriptionController,
+                controller: widget._cubit.taskDescriptionController,
                 onValidation: (value) => combine(
                   [
                     () => isNotEmpty(value),
                     () => isGreaterThan(value, 8),
                   ],
                   onValid: () {
-                    _cubit.validationHelper.addToCheckForm('taskDescription');
-                    _cubit.allTasksFormsAreValid();
+                    widget._cubit.validationHelper.addToCheckForm('taskDescription');
+                    widget._cubit.allTasksFormsAreValid();
                   },
                   onInvalid: () {
-                    _cubit.validationHelper.removeToCheckForm('taskDescription');
-                    _cubit.allTasksFormsAreValid();
+                    widget._cubit.validationHelper.removeToCheckForm('taskDescription');
+                    widget._cubit.allTasksFormsAreValid();
                   },
                 ),
               ),
               const SizedBox(height: 8),
               CButton(
                 label: 'Adicionar imagem',
-                onPressed: () => _cubit.selectImageToAddTask(),
+                onPressed: () => widget._cubit.selectImageToAddTask(),
                 icon: const Icon(
                   Icons.add,
                   color: AppStyleColors.white,

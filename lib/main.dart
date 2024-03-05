@@ -16,7 +16,7 @@ void main() async {
     MaterialApp(
       title: 'demarco_flutter_test',
       theme: AppThemeData.themeData,
-      home: const TasksPage(),
+      home: TasksPage(cubit: GetIt.instance()),
       debugShowCheckedModeBanner: false,
     ),
   );

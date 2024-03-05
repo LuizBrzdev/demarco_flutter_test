@@ -1,12 +1,12 @@
 import 'package:demarco_flutter_test/src/modules/tasks/domain/entities/task_entity.dart';
-import 'package:demarco_flutter_test/src/modules/tasks/infra/datasource/task_datasource.dart';
+import 'package:demarco_flutter_test/src/modules/tasks/infra/datasource/tasks_datasource.dart';
 import 'package:isar/isar.dart';
 import 'package:path_provider/path_provider.dart';
 
 import '../adapters/task_model_adapter.dart';
 import 'task_model.dart';
 
-class IsarDatasource implements TaskDatasource {
+class IsarDatasource implements TasksDatasource {
   Isar? _isar;
 
   static IsarDatasource? _instance;
@@ -34,7 +34,6 @@ class IsarDatasource implements TaskDatasource {
   @override
   Future<void> addNewTask(TaskEntity task) async {
     final isar = await _getInstance();
-
     await isar.writeTxn(() {
       return isar.taskModels.put(TaskModelAdapter.taskEntityToModel(task));
     });
