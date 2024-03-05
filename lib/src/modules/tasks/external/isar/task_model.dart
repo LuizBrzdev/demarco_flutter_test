@@ -27,11 +27,11 @@ class TaskModel implements TaskEntity {
 
   TaskModel({
     this.id = Isar.autoIncrement,
-    required this.name,
-    required this.description,
-    required this.date,
-    required this.completed,
-    required this.image,
+    this.name = '',
+    this.description = '',
+    this.date = '',
+    this.completed = false,
+    this.image = '',
   });
 
   TaskModel.fromMap(Map<String, dynamic> map)
