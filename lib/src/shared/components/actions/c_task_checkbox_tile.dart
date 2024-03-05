@@ -2,10 +2,19 @@ import 'package:demarco_flutter_test/src/core/style/app_style_colors.dart';
 import 'package:flutter/material.dart';
 
 class CTaskCheckBoxTile extends StatelessWidget {
+  ///[title] nome da tarefa
   final String title;
+
+  ///[description] descrição da tarefa
   final String description;
+
+  ///[date] data da tarefa
   final String date;
+
+  ///[completedTask] indica se a tarefa foi concluída
   final bool completedTask;
+
+  ///[onChanged] método executado quando clicar na tarefa
   final void Function(bool? value)? onChanged;
 
   const CTaskCheckBoxTile({

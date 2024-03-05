@@ -6,15 +6,34 @@ import '../../utils/masks/masks_formatter.dart';
 enum CTextFormType { none, date }
 
 class CTextForm extends StatefulWidget {
+  ///[height] altura do formulário
   final double height;
+
+  ///[width] largura do formulário
   final double width;
+
+  ///[type] tipo do formulário, influencia em input de mascaras pois é definido na função [_returnInputFormatterMask]
   final CTextFormType type;
+
+  ///[onChanged] método a ser executado quando alguma alteração for executada no formulário
   final void Function(String value)? onChanged;
+
+  ///[onValidation] método a ser executado quando alguma validação for executada no formulário
   final Function(String value)? onValidation;
+
+  ///[errorText] texto de error, geralmente é cedido pela validação do [ValidationMixin]
   final String errorText;
+
+  ///[maxLines] linhas máximas do formulário
   final int? maxLines;
+
+  ///[hintText] texto de dica para o usuário
   final String? hintText;
+
+  ///[label] label do input
   final String label;
+
+  ///[controller] controller do input
   final TextEditingController? controller;
 
   ///[inputFormatters] formata as mascaras de texto de acordo com o [CTextFormType]
