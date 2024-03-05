@@ -8,36 +8,36 @@ O Clean Dart é uma abordagem de arquitetura de software para desenvolvimento de
 
 Mais detalhes confira [aqui](https://github.com/Flutterando/Clean-Dart) para obter mais detalhes!
 
-src
-├── domain
-│   ├── entities
-│   │   └── my_entity.dart
-│   └── repositories
-│       └── my_repository.dart
-├── external
-│   ├── datasources - (Implementation)
-│   │    └── db_access.dart
-│   └── adapters
-│         └── my_adapter.dart
-├── infra
-│   ├── datasources
-│   │   └── my_datasource.dart
-│   └── repositories - (Implementation)
-│       └── my_repository_imp.dart
-├── presentation
-│   ├── pages
-│   │   └── my_page.dart
-│   ├── widgets
-│   │   └── my_widget.dart
-│   ├── bindings
-│   │   └── my_bindings.dart
-│   └── blocs
-│       ├── states
-│       │   └── my_states.dart
-│       └── cubits
-│           └── my_cubit.dart
-│ 
-└── main.dart
+- src
+  - domain
+    - entities
+      - my_entity.dart
+    - repositories
+      - my_repository.dart
+  - external
+    - datasources (Implementation)
+      - db_access.dart
+    - adapters
+      - my_adapter.dart
+  - infra
+    - datasources
+      - my_datasource.dart
+    - repositories (Implementation)
+      - my_repository_imp.dart
+  - presentation
+    - pages
+      - my_page.dart
+    - widgets
+      - my_widget.dart
+    - bindings
+      - my_bindings.dart
+    - blocs
+      - states
+        - my_states.dart
+      - cubits
+        - my_cubit.dart
+- main.dart
+
 
 
 ### Domain
