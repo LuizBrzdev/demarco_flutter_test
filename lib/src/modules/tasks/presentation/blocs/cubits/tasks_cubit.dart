@@ -1,6 +1,7 @@
 import 'package:demarco_flutter_test/src/shared/utils/validation/validation_helper.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import '../../../domain/entities/task_entity.dart';
 import '../../../domain/repositories/tasks_repository.dart';
@@ -28,7 +29,20 @@ class TasksCubit extends Cubit<TasksState> {
 
   Future<void> fetchAllTasks() async {
     final tasks = await _tasksRepository.getTasks();
+    orderTasksByDate(tasks);
     _emitTasks(tasks);
+  }
+
+  void orderTasksByDate(List<TaskEntity> tasks) {
+    tasks.sort((a, b) {
+      DateTime firstTaskDate = DateFormat('dd/MM/yyyy').parse(a.date);
+      DateTime secondTaskDate = DateFormat('dd/MM/yyyy').parse(b.date);
+      return firstTaskDate.compareTo(secondTaskDate);
+    });
+  }
+
+  List<TaskEntity> filterTasksByCompletedStatus(List<TaskEntity> tasks) {
+    return tasks.where((task) => task.completed == false).toList();
   }
 
   Future<void> updateCompletedStatus(TaskEntity task) async {

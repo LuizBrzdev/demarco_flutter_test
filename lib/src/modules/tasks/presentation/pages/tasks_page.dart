@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -66,14 +67,46 @@ class _TasksPageState extends State<TasksPage> with ValidationMixin {
                     return Column(
                       key: const Key('LoadedState'),
                       children: [
-                        CarrouselSlider(
-                          itemCount: state.tasks.length,
-                          itemBuilder: (context, index) => Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 12),
-                            child: CarrouselImage(
-                              imageUrl: state.tasks[index].image,
-                              taskName: state.tasks[index].name,
-                              taskDate: state.tasks[index].date,
+                        FadeOut(
+                          child: Visibility(
+                            visible:
+                                widget._cubit.filterTasksByCompletedStatus(state.tasks).isNotEmpty,
+                            replacement: Container(
+                              margin: const EdgeInsets.symmetric(horizontal: 12),
+                              height: 200,
+                              decoration: BoxDecoration(
+                                color: AppStyleColors.primary,
+                                borderRadius: BorderRadius.circular(12),
+                                border: Border.all(width: 1, color: AppStyleColors.primary),
+                              ),
+                              child: Center(
+                                child: FadeIn(
+                                  child: const Text(
+                                    'Parabéns, você não tem nenhuma tarefa pendente',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold, color: AppStyleColors.white),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            child: CarrouselSlider(
+                              itemCount:
+                                  widget._cubit.filterTasksByCompletedStatus(state.tasks).length,
+                              itemBuilder: (context, index) => Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 12),
+                                child: CarrouselImage(
+                                  imageUrl: widget._cubit
+                                      .filterTasksByCompletedStatus(state.tasks)[index]
+                                      .image,
+                                  taskName: widget._cubit
+                                      .filterTasksByCompletedStatus(state.tasks)[index]
+                                      .name,
+                                  taskDate: widget._cubit
+                                      .filterTasksByCompletedStatus(state.tasks)[index]
+                                      .date,
+                                ),
+                              ),
                             ),
                           ),
                         ),
