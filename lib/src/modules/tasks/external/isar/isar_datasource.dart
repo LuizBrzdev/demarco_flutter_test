@@ -28,6 +28,7 @@ class IsarDatasource implements TasksDatasource {
   @override
   Future<List<TaskModel>> getAllTasks() async {
     final isar = await _getInstance();
+    //isar.writeTxn(() async => await isar.taskModels.clear());
     return await isar.taskModels.where().findAll();
   }
 
