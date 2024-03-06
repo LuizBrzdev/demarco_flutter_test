@@ -84,6 +84,7 @@ class _CTextFormState extends State<CTextForm> {
             },
             decoration: InputDecoration(
               hintText: widget.hintText,
+              isDense: true,
               enabledBorder: const OutlineInputBorder(
                 borderRadius: BorderRadius.all(Radius.circular(12)),
                 borderSide: BorderSide(width: 2, color: AppStyleColors.grey),
@@ -97,7 +98,6 @@ class _CTextFormState extends State<CTextForm> {
                 borderSide: BorderSide(width: 2, color: Colors.red),
               ),
               labelText: widget.label,
-              alignLabelWithHint: true,
               labelStyle: TextStyle(color: AppStyleColors.primary, fontWeight: FontWeight.bold),
               hintStyle: TextStyle(
                 color: Colors.grey.withOpacity(0.6),
