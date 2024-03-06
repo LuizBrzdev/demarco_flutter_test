@@ -64,12 +64,16 @@ mixin ValidationMixin {
       return message ?? 'Data inválida';
     }
 
-    final DateTime inputDate = DateFormat('dd/MM/yyyy').parse(value);
+    final DateTime inputDate = DateFormat('dd/MM/yyyy')
+        .parse(value)
+        .add(const Duration(days: 1))
+        .subtract(const Duration(microseconds: 1));
 
     if (inputDate.isBefore(DateTime.now())) {
       onInvalid?.call();
       return message ?? 'Data inválida';
     }
+
     onValid?.call();
     return null;
   }
