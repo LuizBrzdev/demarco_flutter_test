@@ -121,3 +121,5 @@ Mais detalhes confira [aqui](https://github.com/Flutterando/Clean-Dart) para obt
 4. **Execute o aplicativo**: Agora você pode executar o aplicativo em um emulador ou dispositivo físico (Recomendo que seja em um Android)
 
 Lembre-se de consultar a [documentação de instalação do Flutter](https://flutter.dev/docs/get-started/install) se precisar de mais orientações sobre como configurar seu ambiente de desenvolvimento.
+
+Obs: Caso queira baixar somente a APK pode clicar [aqui](https://we.tl/t-PMDVr4b4zm)
