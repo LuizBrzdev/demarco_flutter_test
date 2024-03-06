@@ -122,4 +122,4 @@ Mais detalhes confira [aqui](https://github.com/Flutterando/Clean-Dart) para obt
 
 Lembre-se de consultar a [documentação de instalação do Flutter](https://flutter.dev/docs/get-started/install) se precisar de mais orientações sobre como configurar seu ambiente de desenvolvimento.
 
-Obs: Caso queira baixar somente a APK pode clicar [aqui](https://we.tl/t-PMDVr4b4zm)
+Obs: Caso queira baixar somente a APK pode clicar [aqui](https://we.tl/t-tD5fy4wWSl)
